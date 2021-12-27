@@ -1,0 +1,59 @@
+parent.0		=  simple.params
+
+pop.subpop.0.size = 30
+samplingSize  	  = 30
+generations       = 20
+
+threhold          = 15
+
+
+# 0 no local search , 1 allows local search,10 allows all tasks to be compulated 
+LS 	              =  0
+
+seed.0                                         = 1
+composition-task                               = problem.xml
+composition-taxonomy                           = taxonomy.owl
+composition-services                           = services-output.xml
+
+
+fitness-weight1                                = 0.25
+fitness-weight2                                = 0.25
+fitness-weight3                                = 0.125
+fitness-weight4                                = 0.125
+fitness-weight5                                = 0.125
+fitness-weight6                                = 0.125
+
+matingProbability							   = 0.9
+
+#stat.evaluations                               = $eval.stat
+#stat.eval-sample-rate                          = 30
+
+pop.subpop.0.species		 = ec.vector.VectorSpecies
+pop.subpop.0.species.ind	 = wsc.ecj.ga.SequenceVectorIndividual
+pop.subpop.0.species.fitness = ec.simple.SimpleFitness
+
+# The global mutation probability must be set, so we set it to 0
+pop.subpop.0.species.mutation-prob	= 0.0
+
+eval.problem                                   = wsc.ecj.ga.WSCProblem
+init                                           = wsc.ecj.ga.WSCInitializer
+stat                                           = wsc.ecj.ga.GraphStatistics
+stat.file		                               = out.stat
+stat.do-time                                   = true
+stat.do-final                                  = true
+
+eval		            = wsc.ecj.ga.MultiTaskingEvaluator
+breed                   = wsc.ecj.ga.MultiTaskingBreeder
+
+
+
+pop.subpop.0.species.pipe                      = ec.breed.MultiBreedingPipeline
+pop.subpop.0.species.pipe.num-sources          = 1
+pop.subpop.0.species.pipe.source.0             = wsc.ecj.ga.WSCAssortativeMating
+pop.subpop.0.species.pipe.source.0.prob        = 0.0
+pop.subpop.0.species.pipe.source.0.num-sources = 2
+pop.subpop.0.species.pipe.source.0.source.0	   = ec.select.RandomSelection
+pop.subpop.0.species.pipe.source.0.source.1	   = ec.select.RandomSelection
+#breed.elite-fraction.0 = 0.25
+#breed.elite.0                                  = 2
+#select.tournament.size                         = 2
